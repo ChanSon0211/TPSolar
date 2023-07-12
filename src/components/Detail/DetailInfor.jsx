@@ -6,8 +6,13 @@ import {
 import ItemProductRelative from "../Items/ItemProductRelative";
 import { useState } from "react";
 import ModalSpecification from "../Modal/ModalSpecification";
+import { useFetch } from "../../hooks/useFetch";
+import { productService } from "../../service/product.service";
 
-export default function DetailInfor() {
+export default function DetailInfor({ product }) {
+  const { loading, data: listProduct } = useFetch(() => {
+    return productService.getAllProducts();
+  });
   const [moreDetail, setMoreDetail] = useState(0);
 
   const showDetail = () => {
@@ -88,10 +93,15 @@ export default function DetailInfor() {
           <p className="font-bold text-[1.1em]">Sản phẩm liên quan</p>
           <div className="p-15px">
             <Row className=" m-0">
-              <ItemProductRelative />
-              <ItemProductRelative />
-              <ItemProductRelative />
-              <ItemProductRelative />
+              {listProduct?.data.metadata
+                .filter((i) => i.category_id === product.category_id)
+                .map((item, index) =>
+                  item.product_id !== product.product_id ? (
+                    <ItemProductRelative item={item} key={index} />
+                  ) : (
+                    <></>
+                  )
+                )}
             </Row>
           </div>
         </div>

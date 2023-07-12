@@ -121,7 +121,7 @@ export default function DetailProduct() {
           </div>
           <Row>
             <div className="col-lg-4 col-tb-5 col-tbs-12 relative image-slick">
-              <ModalVideo />
+              {/* <ModalVideo /> */}
               <Carousel
                 showThumbs={true}
                 showIndicators={false}
@@ -305,7 +305,7 @@ export default function DetailProduct() {
               </div>
             </div>
           </Row>
-          <DetailInfor />
+          <DetailInfor product={product}/>
         </Row>
       </CardMain>
       <div className="justify-between items-center gap-2 sticky-bottom p-[10px] d-lg-none d-sm-flex">
