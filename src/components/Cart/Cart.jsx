@@ -2,7 +2,7 @@ import { Row } from "react-bootstrap";
 import CardMain from "../Card/CardMain";
 import "./Cart.css";
 import ItemCart from "./ItemCart";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsGiftFill } from "react-icons/bs";
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
@@ -10,7 +10,11 @@ import { productService } from "../../service/product.service";
 import { useAuth } from "../AuthContext/index";
 
 export default function Cart() {
+  const navigate = useNavigate()
   const { user } = useAuth();
+  if (!user) {
+    navigate("/")
+  }
   const [arrCart, setArrCart] = useState([]);
   const { loadingCart, data: listCart } = useFetch(() => {
     return productService.getCartById(user.id);
